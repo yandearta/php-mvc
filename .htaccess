@@ -1,0 +1,14 @@
+# Disable directory listing
+Options -Indexes 
+
+<IfModule mod_rewrite.c>
+  # Rewrite all requests to the public directory
+  RewriteEngine On
+  RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+# If Module mod_rewrite is not available, show an error
+<IfModule !mod_rewrite.c>
+  ErrorDocument 403 "Module mod_rewrite is required to run this application."
+  ErrorDocument 404 "Module mod_rewrite is required to run this application."
+</IfModule>

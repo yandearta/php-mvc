@@ -1,0 +1,23 @@
+{
+  "name": "yandearta/php-mvc",
+  "description": "PHP MVC Starter Kit",
+  "type": "project",
+  "authors": [
+    {
+      "name": "Yande Arta",
+      "email": "yandearta00@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    },
+    "files": [
+      "app/helpers.php"
+    ]
+  },
+  "require": {
+    "php": ">=8",
+    "vlucas/phpdotenv": "^5.5"
+  }
+}
