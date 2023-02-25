@@ -58,10 +58,11 @@ class Router
     // Check if route exists
     foreach (self::$routes as $route) {
       /**
-       * Replace {string} & {int} with regex
-       * Example: /hello/{string}/{int} => /hello/([a-zA-Z]*)/([0-9]*)
+       * Replace {} & {int} with regex
+       * Example: /users/{} => /users/([0-9a-zA-Z]*)
+       * Example: /users/{int} => /users/([0-9]*)
        */
-      $route['path'] = str_replace("{string}", "([a-zA-Z]*)", $route['path']);
+      $route['path'] = str_replace("{}", "([0-9a-zA-Z]*)", $route['path']);
       $route['path'] = str_replace("{int}", "([0-9]*)", $route['path']);
       $pattern = '#^' . $route['path'] . '$#';
 
