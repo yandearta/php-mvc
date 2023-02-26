@@ -1,5 +1,6 @@
 <?php
 
+use App\Core\Database;
 use App\Core\Router;
 
 // Start session
@@ -17,6 +18,9 @@ date_default_timezone_set(config('app.timezone'));
 
 // Load routes
 require_once __DIR__ . '/../routes/web.php';
+
+// Initiate Database
+Database::init();
 
 // Run routes
 Router::run();

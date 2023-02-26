@@ -4,26 +4,20 @@ namespace App\Models;
 
 use App\Core\Database;
 
-class User
+class User extends Database
 {
-  private $table = 'users';
-  private $db;
+  private static $table = 'users';
 
-  public function __construct()
+  public static function getAll()
   {
-    $this->db = new Database();
+    self::query("SELECT * FROM " . self::$table);
+    return self::all();
   }
 
-  public function getAll()
+  public static function getById(int $id)
   {
-    $this->db->query("SELECT * FROM $this->table");
-    return $this->db->all();
-  }
-
-  public function getById(int $id)
-  {
-    $this->db->query("SELECT * FROM $this->table WHERE id = :id");
-    $this->db->bind('id', $id);
-    return $this->db->single();
+    self::query("SELECT * FROM " . self::$table . " WHERE id = :id");
+    self::bind(':id', $id);
+    return self::single();
   }
 }

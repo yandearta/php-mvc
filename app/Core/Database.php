@@ -4,92 +4,82 @@ namespace App\Core;
 
 use PDO;
 use PDOException;
+use PDOStatement;
 
 class Database
 {
-  private $db_connection;
-  private $db_host;
-  private $db_port;
-  private $db_username;
-  private $db_password;
-  private $db_name;
+  // PDO instance
+  private static ?PDO $pdo;
 
-  // Database Handler
-  private $dbh;
+  // PDO statement
+  private static ?PDOStatement $stmt;
 
-  // Statement
-  private $stmt;
-
-  public function __construct()
+  public static function init()
   {
-    $this->db_connection = config('db.connection');
-    $this->db_host = config('db.host');
-    $this->db_port = config('db.port');
-    $this->db_name = config('db.database');
-    $this->db_username = config('db.username');
-    $this->db_password = config('db.password');
+    $db_connection = config('db.connection');
+    $db_host = config('db.host');
+    $db_port = config('db.port');
+    $db_database = config('db.database');
+    $db_username = config('db.username');
+    $db_password = config('db.password');
 
     // Data Source Name
-    $dsn = "$this->db_connection:host=$this->db_host;port=$this->db_port;dbname=$this->db_name";
+    $dsn = "$db_connection:host=$db_host;port=$db_port;dbname=$db_database";
 
     // Set PDO options
     $options = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION];
 
     try {
-      $this->dbh = new PDO($dsn, $this->db_username, $this->db_password, $options);
+      self::$pdo = new PDO($dsn, $db_username, $db_password, $options);
     } catch (PDOException $e) {
-      die($e->getMessage());
+      die("Database connection failed: " . $e->getMessage());
     }
   }
 
   /**
    * Prepare statement with query
    */
-  public function query(string $query)
+  public static function query(string $query)
   {
-    $this->stmt = $this->dbh->prepare($query);
+    self::$stmt = self::$pdo->prepare($query);
   }
 
   /**
    * Binds a value to a parameter
    */
-  public function bind(string $param, string|int|bool|null $value)
+  public static function bind(string $param, string|int|bool|null $value)
   {
     $type = PDO::PARAM_STR;
     if (is_int($value)) $type = PDO::PARAM_INT;
     if (is_bool($value)) $type = PDO::PARAM_BOOL;
     if (is_null($value)) $type = PDO::PARAM_NULL;
 
-    $this->stmt->bindValue($param, $value, $type);
+    self::$stmt->bindValue($param, $value, $type);
   }
 
   /**
    * Execute the prepared statement
    */
-  public function execute()
+  public static function execute()
   {
-    try {
-      return $this->stmt->execute();
-    } catch (PDOException $e) {
-      die($e->getMessage());
-    }
+    return self::$stmt->execute();
   }
 
   /**
    * Get result set as array of objects
    */
-  public function all()
+  public static function all()
   {
-    $this->execute();
-    return $this->stmt->fetchAll(PDO::FETCH_OBJ);
+    self::execute();
+    return self::$stmt->fetchAll(PDO::FETCH_OBJ);
   }
 
   /**
    * Get single record as object
    */
-  public function single()
+  public static function single()
   {
-    $this->execute();
-    return $this->stmt->fetch(PDO::FETCH_OBJ);
+    self::execute();
+    return self::$stmt->fetch(PDO::FETCH_OBJ);
   }
 }
