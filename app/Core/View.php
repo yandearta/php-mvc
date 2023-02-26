@@ -12,4 +12,13 @@ class View
     extract($data);
     require __DIR__ . "/../../views/$view.php";
   }
+
+  /**
+   * Redirect to given url
+   */
+  public static function redirect(string $url)
+  {
+    header("Location: $url");
+    exit();
+  }
 }

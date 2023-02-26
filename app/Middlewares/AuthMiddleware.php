@@ -2,12 +2,14 @@
 
 namespace App\Middlewares;
 
+use App\Core\View;
+
 class AuthMiddleware
 {
   function handle(): void
   {
     if (!isset($_SESSION['user'])) {
-      die(header('Location: ' . config('app.base_url') . '/login'));
+      View::redirect(config('app.base_url') . '/login');
     }
   }
 }
