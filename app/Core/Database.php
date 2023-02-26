@@ -39,7 +39,7 @@ class Database
   /**
    * Prepare statement with query
    */
-  public static function query(string $query)
+  protected static function query(string $query)
   {
     self::$stmt = self::$pdo->prepare($query);
   }
@@ -47,7 +47,7 @@ class Database
   /**
    * Binds a value to a parameter
    */
-  public static function bind(string $param, string|int|bool|null $value)
+  protected static function bind(string $param, string|int|bool|null $value)
   {
     $type = PDO::PARAM_STR;
     if (is_int($value)) $type = PDO::PARAM_INT;
@@ -60,7 +60,7 @@ class Database
   /**
    * Execute the prepared statement
    */
-  public static function execute()
+  protected static function execute()
   {
     return self::$stmt->execute();
   }
@@ -68,7 +68,7 @@ class Database
   /**
    * Get result set as array of objects
    */
-  public static function all()
+  protected static function all()
   {
     self::execute();
     return self::$stmt->fetchAll(PDO::FETCH_OBJ);
@@ -77,7 +77,7 @@ class Database
   /**
    * Get single record as object
    */
-  public static function single()
+  protected static function single()
   {
     self::execute();
     return self::$stmt->fetch(PDO::FETCH_OBJ);
