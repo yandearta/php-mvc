@@ -1,13 +1,13 @@
 <?php
 
-use App\Core\Database;
-use App\Core\Router;
-
 // Start session
 if (!session_id()) session_start();
 
 // Load packages
 require_once __DIR__ . '/../vendor/autoload.php';
+
+use App\Core\Database;
+use App\Core\Router;
 
 // Load environment variables
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
