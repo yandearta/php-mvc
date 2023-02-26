@@ -32,7 +32,7 @@ class Database
     try {
       self::$pdo = new PDO($dsn, $db_username, $db_password, $options);
     } catch (PDOException $e) {
-      die("Database connection failed: " . $e->getMessage());
+      exit("Database connection failed: " . $e->getMessage());
     }
   }
 

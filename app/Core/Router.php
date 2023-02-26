@@ -31,16 +31,16 @@ class Router
   {
     http_response_code(404);
 
-    if ($message) die($message);
+    if ($message) exit($message);
 
     // Set 404 page path
     $not_found_page = __DIR__ . '/../../app/Views/404.php';
 
-    // Die if 404 page doesn't exist
-    if (!file_exists($not_found_page)) die("<p>404 Page not found</p>");
+    // Exit if 404 page doesn't exist
+    if (!file_exists($not_found_page)) exit("<p>404 Page not found</p>");
 
     // Return 404 page
-    die(require $not_found_page);
+    exit(require $not_found_page);
   }
 
   /**
