@@ -2,12 +2,12 @@
 
 namespace App\Controllers;
 
-use App\Core\Controller;
+use App\Core\View;
 
-class HomeController extends Controller
+class HomeController
 {
   public function index(): void
   {
-    $this->view('index', ['title' => 'PHP MVC Starter Kit']);
+    View::render('index', ['title' => 'PHP MVC Starter Kit']);
   }
 }
