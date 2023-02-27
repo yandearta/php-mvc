@@ -34,7 +34,7 @@ class Router
     if ($message) exit($message);
 
     // Set 404 page path
-    $not_found_page = __DIR__ . '/../../app/Views/404.php';
+    $not_found_page = __DIR__ . '/../../views/404.php';
 
     // Exit if 404 page doesn't exist
     if (!file_exists($not_found_page)) exit("<p>404 Page not found</p>");
